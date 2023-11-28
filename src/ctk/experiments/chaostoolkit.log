@@ -1,0 +1,6 @@
+[36m[2023-11-28 10:18:29 DEBUG] [cli:114][39m ###############################################################################
+[36m[2023-11-28 10:18:29 DEBUG] [cli:115][39m Running command 'run'
+[36m[2023-11-28 10:18:29 DEBUG] [cli:119][39m Using settings file 'C:\Users\HenningMöllers\.chaostoolkit\settings.yaml'
+[36m[2023-11-28 10:18:32 DEBUG] [settings:30][39m The Chaos Toolkit settings file could not be found at 'C:\Users\HenningMöllers\.chaostoolkit\settings.yaml'.
+[36m[2023-11-28 10:18:32 DEBUG] [__init__:445][39m No controls to apply on 'loader'
+[36m[2023-11-28 10:18:32 DEBUG] [__init__:445][39m No controls to apply on 'loader'
