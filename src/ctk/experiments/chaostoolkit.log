@@ -4,3 +4,119 @@
 [36m[2023-11-28 10:18:32 DEBUG] [settings:30][39m The Chaos Toolkit settings file could not be found at 'C:\Users\HenningMöllers\.chaostoolkit\settings.yaml'.
 [36m[2023-11-28 10:18:32 DEBUG] [__init__:445][39m No controls to apply on 'loader'
 [36m[2023-11-28 10:18:32 DEBUG] [__init__:445][39m No controls to apply on 'loader'
+[36m[2023-11-28 16:04:17 DEBUG] [cli:114][39m ###############################################################################
+[36m[2023-11-28 16:04:17 DEBUG] [cli:115][39m Running command 'run'
+[36m[2023-11-28 16:04:17 DEBUG] [cli:119][39m Using settings file 'C:\Users\HenningMöllers\.chaostoolkit\settings.yaml'
+[36m[2023-11-28 16:04:19 DEBUG] [settings:30][39m The Chaos Toolkit settings file could not be found at 'C:\Users\HenningMöllers\.chaostoolkit\settings.yaml'.
+[36m[2023-11-28 16:04:19 DEBUG] [__init__:445][39m No controls to apply on 'loader'
+[36m[2023-11-28 16:04:19 DEBUG] [__init__:445][39m No controls to apply on 'loader'
+[36m[2023-11-28 16:04:19 DEBUG] [caching:24][39m Building activity cache...
+[36m[2023-11-28 16:04:19 DEBUG] [caching:35][39m Cached 3 activities
+[32m[2023-11-28 16:04:19 INFO] [experiment:58][39m Validating the experiment's syntax
+[36m[2023-11-28 16:04:19 DEBUG] [configuration:63][39m Loading configuration...
+[36m[2023-11-28 16:04:19 DEBUG] [secret:78][39m Loading secrets...
+[36m[2023-11-28 16:04:19 DEBUG] [secret:103][39m Done loading secrets
+[36m[2023-11-28 16:04:19 DEBUG] [caching:42][39m Clearing activities cache
+[31m[2023-11-28 16:04:19 ERROR] [cli:278][39m could not find Python module 'processMonitoring' in activity 'the-cinema-booking-service-must-be-running'
+[36m[2023-11-28 16:04:19 DEBUG] [cli:279][39m could not find Python module 'processMonitoring' in activity 'the-cinema-booking-service-must-be-running'
+[36m[2023-11-28 16:07:43 DEBUG] [cli:114][39m ###############################################################################
+[36m[2023-11-28 16:07:43 DEBUG] [cli:115][39m Running command 'run'
+[36m[2023-11-28 16:07:43 DEBUG] [cli:119][39m Using settings file 'C:\Users\HenningMöllers\.chaostoolkit\settings.yaml'
+[36m[2023-11-28 16:07:44 DEBUG] [settings:30][39m The Chaos Toolkit settings file could not be found at 'C:\Users\HenningMöllers\.chaostoolkit\settings.yaml'.
+[36m[2023-11-28 16:07:44 DEBUG] [__init__:445][39m No controls to apply on 'loader'
+[36m[2023-11-28 16:07:44 DEBUG] [__init__:445][39m No controls to apply on 'loader'
+[36m[2023-11-28 16:07:44 DEBUG] [caching:24][39m Building activity cache...
+[36m[2023-11-28 16:07:44 DEBUG] [caching:35][39m Cached 3 activities
+[32m[2023-11-28 16:07:44 INFO] [experiment:58][39m Validating the experiment's syntax
+[36m[2023-11-28 16:07:44 DEBUG] [configuration:63][39m Loading configuration...
+[36m[2023-11-28 16:07:44 DEBUG] [secret:78][39m Loading secrets...
+[36m[2023-11-28 16:07:44 DEBUG] [secret:103][39m Done loading secrets
+[36m[2023-11-28 16:07:44 DEBUG] [caching:42][39m Clearing activities cache
+[36m[2023-11-28 16:30:17 DEBUG] [cli:114][39m ###############################################################################
+[36m[2023-11-28 16:30:17 DEBUG] [cli:115][39m Running command 'run'
+[36m[2023-11-28 16:30:17 DEBUG] [cli:119][39m Using settings file 'C:\Users\HenningMöllers\.chaostoolkit\settings.yaml'
+[36m[2023-11-28 16:30:18 DEBUG] [settings:30][39m The Chaos Toolkit settings file could not be found at 'C:\Users\HenningMöllers\.chaostoolkit\settings.yaml'.
+[36m[2023-11-28 16:30:18 DEBUG] [__init__:445][39m No controls to apply on 'loader'
+[36m[2023-11-28 16:30:18 DEBUG] [__init__:445][39m No controls to apply on 'loader'
+[36m[2023-11-28 16:30:18 DEBUG] [caching:24][39m Building activity cache...
+[36m[2023-11-28 16:30:18 DEBUG] [caching:35][39m Cached 3 activities
+[32m[2023-11-28 16:30:18 INFO] [experiment:58][39m Validating the experiment's syntax
+[36m[2023-11-28 16:30:18 DEBUG] [configuration:63][39m Loading configuration...
+[36m[2023-11-28 16:30:18 DEBUG] [secret:78][39m Loading secrets...
+[36m[2023-11-28 16:30:18 DEBUG] [secret:103][39m Done loading secrets
+[36m[2023-11-28 16:30:18 DEBUG] [caching:42][39m Clearing activities cache
+[31m[2023-11-28 16:30:18 ERROR] [cli:278][39m could not find Python module 'processMonitoring' in activity 'the-cinema-booking-service-must-be-running'
+[36m[2023-11-28 16:30:18 DEBUG] [cli:279][39m could not find Python module 'processMonitoring' in activity 'the-cinema-booking-service-must-be-running'
+[36m[2023-11-28 16:30:37 DEBUG] [cli:114][39m ###############################################################################
+[36m[2023-11-28 16:30:37 DEBUG] [cli:115][39m Running command 'run'
+[36m[2023-11-28 16:30:37 DEBUG] [cli:119][39m Using settings file 'C:\Users\HenningMöllers\.chaostoolkit\settings.yaml'
+[36m[2023-11-28 16:30:38 DEBUG] [settings:30][39m The Chaos Toolkit settings file could not be found at 'C:\Users\HenningMöllers\.chaostoolkit\settings.yaml'.
+[36m[2023-11-28 16:30:38 DEBUG] [__init__:445][39m No controls to apply on 'loader'
+[36m[2023-11-28 16:30:38 DEBUG] [__init__:445][39m No controls to apply on 'loader'
+[36m[2023-11-28 16:30:38 DEBUG] [caching:24][39m Building activity cache...
+[36m[2023-11-28 16:30:38 DEBUG] [caching:35][39m Cached 3 activities
+[32m[2023-11-28 16:30:38 INFO] [experiment:58][39m Validating the experiment's syntax
+[36m[2023-11-28 16:30:38 DEBUG] [configuration:63][39m Loading configuration...
+[36m[2023-11-28 16:30:38 DEBUG] [secret:78][39m Loading secrets...
+[36m[2023-11-28 16:30:38 DEBUG] [secret:103][39m Done loading secrets
+[36m[2023-11-28 16:30:38 DEBUG] [caching:42][39m Clearing activities cache
+[31m[2023-11-28 16:30:38 ERROR] [cli:278][39m could not find Python module '/processMonitoring' in activity 'the-cinema-booking-service-must-be-running'
+[36m[2023-11-28 16:30:38 DEBUG] [cli:279][39m could not find Python module '/processMonitoring' in activity 'the-cinema-booking-service-must-be-running'
+[36m[2023-11-28 16:32:50 DEBUG] [cli:114][39m ###############################################################################
+[36m[2023-11-28 16:32:50 DEBUG] [cli:115][39m Running command 'run'
+[36m[2023-11-28 16:32:50 DEBUG] [cli:119][39m Using settings file 'C:\Users\HenningMöllers\.chaostoolkit\settings.yaml'
+[36m[2023-11-28 16:32:51 DEBUG] [settings:30][39m The Chaos Toolkit settings file could not be found at 'C:\Users\HenningMöllers\.chaostoolkit\settings.yaml'.
+[36m[2023-11-28 16:32:51 DEBUG] [__init__:445][39m No controls to apply on 'loader'
+[36m[2023-11-28 16:32:51 DEBUG] [__init__:445][39m No controls to apply on 'loader'
+[36m[2023-11-28 16:32:51 DEBUG] [caching:24][39m Building activity cache...
+[36m[2023-11-28 16:32:51 DEBUG] [caching:35][39m Cached 3 activities
+[32m[2023-11-28 16:32:51 INFO] [experiment:58][39m Validating the experiment's syntax
+[36m[2023-11-28 16:32:51 DEBUG] [configuration:63][39m Loading configuration...
+[36m[2023-11-28 16:32:51 DEBUG] [secret:78][39m Loading secrets...
+[36m[2023-11-28 16:32:51 DEBUG] [secret:103][39m Done loading secrets
+[36m[2023-11-28 16:32:51 DEBUG] [caching:42][39m Clearing activities cache
+[36m[2023-11-28 16:35:27 DEBUG] [cli:114][39m ###############################################################################
+[36m[2023-11-28 16:35:27 DEBUG] [cli:115][39m Running command 'run'
+[36m[2023-11-28 16:35:27 DEBUG] [cli:119][39m Using settings file 'C:\Users\HenningMöllers\.chaostoolkit\settings.yaml'
+[36m[2023-11-28 16:35:29 DEBUG] [settings:30][39m The Chaos Toolkit settings file could not be found at 'C:\Users\HenningMöllers\.chaostoolkit\settings.yaml'.
+[36m[2023-11-28 16:35:29 DEBUG] [__init__:445][39m No controls to apply on 'loader'
+[36m[2023-11-28 16:35:29 DEBUG] [__init__:445][39m No controls to apply on 'loader'
+[36m[2023-11-28 16:35:29 DEBUG] [caching:24][39m Building activity cache...
+[36m[2023-11-28 16:35:29 DEBUG] [caching:35][39m Cached 3 activities
+[32m[2023-11-28 16:35:29 INFO] [experiment:58][39m Validating the experiment's syntax
+[36m[2023-11-28 16:35:29 DEBUG] [configuration:63][39m Loading configuration...
+[36m[2023-11-28 16:35:29 DEBUG] [secret:78][39m Loading secrets...
+[36m[2023-11-28 16:35:29 DEBUG] [secret:103][39m Done loading secrets
+[36m[2023-11-28 16:35:29 DEBUG] [caching:42][39m Clearing activities cache
+[31m[2023-11-28 16:35:29 ERROR] [cli:278][39m could not find Python module 'processMonitoring' in activity 'the-cinema-booking-service-must-be-running'
+[36m[2023-11-28 16:35:29 DEBUG] [cli:279][39m could not find Python module 'processMonitoring' in activity 'the-cinema-booking-service-must-be-running'
+[36m[2023-11-28 16:40:46 DEBUG] [cli:114][39m ###############################################################################
+[36m[2023-11-28 16:40:46 DEBUG] [cli:115][39m Running command 'run'
+[36m[2023-11-28 16:40:46 DEBUG] [cli:119][39m Using settings file 'C:\Users\HenningMöllers\.chaostoolkit\settings.yaml'
+[36m[2023-11-28 16:40:48 DEBUG] [settings:30][39m The Chaos Toolkit settings file could not be found at 'C:\Users\HenningMöllers\.chaostoolkit\settings.yaml'.
+[36m[2023-11-28 16:40:48 DEBUG] [__init__:445][39m No controls to apply on 'loader'
+[36m[2023-11-28 16:40:48 DEBUG] [__init__:445][39m No controls to apply on 'loader'
+[36m[2023-11-28 16:40:48 DEBUG] [caching:24][39m Building activity cache...
+[36m[2023-11-28 16:40:48 DEBUG] [caching:35][39m Cached 3 activities
+[32m[2023-11-28 16:40:48 INFO] [experiment:58][39m Validating the experiment's syntax
+[36m[2023-11-28 16:40:48 DEBUG] [configuration:63][39m Loading configuration...
+[36m[2023-11-28 16:40:48 DEBUG] [secret:78][39m Loading secrets...
+[36m[2023-11-28 16:40:48 DEBUG] [secret:103][39m Done loading secrets
+[36m[2023-11-28 16:40:49 DEBUG] [caching:42][39m Clearing activities cache
+[31m[2023-11-28 16:40:49 ERROR] [cli:278][39m a Python activity must have a function name
+[36m[2023-11-28 16:40:49 DEBUG] [cli:279][39m a Python activity must have a function name
+[36m[2023-11-28 16:44:46 DEBUG] [cli:114][39m ###############################################################################
+[36m[2023-11-28 16:44:46 DEBUG] [cli:115][39m Running command 'run'
+[36m[2023-11-28 16:44:46 DEBUG] [cli:119][39m Using settings file 'C:\Users\HenningMöllers\.chaostoolkit\settings.yaml'
+[36m[2023-11-28 16:44:47 DEBUG] [settings:30][39m The Chaos Toolkit settings file could not be found at 'C:\Users\HenningMöllers\.chaostoolkit\settings.yaml'.
+[36m[2023-11-28 16:44:47 DEBUG] [__init__:445][39m No controls to apply on 'loader'
+[36m[2023-11-28 16:44:48 DEBUG] [__init__:445][39m No controls to apply on 'loader'
+[36m[2023-11-28 16:44:48 DEBUG] [caching:24][39m Building activity cache...
+[36m[2023-11-28 16:44:48 DEBUG] [caching:35][39m Cached 3 activities
+[32m[2023-11-28 16:44:48 INFO] [experiment:58][39m Validating the experiment's syntax
+[36m[2023-11-28 16:44:48 DEBUG] [configuration:63][39m Loading configuration...
+[36m[2023-11-28 16:44:48 DEBUG] [secret:78][39m Loading secrets...
+[36m[2023-11-28 16:44:48 DEBUG] [secret:103][39m Done loading secrets
+[36m[2023-11-28 16:44:49 DEBUG] [caching:42][39m Clearing activities cache
+[31m[2023-11-28 16:44:49 ERROR] [cli:278][39m a Python activity must have a function name
+[36m[2023-11-28 16:44:49 DEBUG] [cli:279][39m a Python activity must have a function name
