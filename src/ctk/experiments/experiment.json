@@ -26,6 +26,7 @@
       "provider": {
         "type": "python",
         "module": "processKilling",
+        "func": "kill_process_by_name",
         "arguments":{
           "process_name": "KeePassXC.exe"
         }
@@ -44,17 +45,6 @@
         }
       }
 
-    }
-  ],
-  "rollbacks": [
-    {
-      "type": "action",
-      "name": "start-process-if-not-already-restarted",
-      "provider": {
-        "type": "process",
-        "path": "",
-        "arguments": ""
-      }
     }
   ]
 }
