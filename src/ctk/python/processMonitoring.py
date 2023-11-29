@@ -14,7 +14,7 @@ def check_process_exists(process_name):
 
 def get_duration_until_process_started(process_name, monitoring_duration_sec):
     monitoring_start_time = datetime.now()
-    print("monitoring_start_time", monitoring_start_time)
+    # print("monitoring_start_time", monitoring_start_time)
 
     while (datetime.now() - monitoring_start_time).total_seconds() < monitoring_duration_sec:
         if check_process_exists(process_name):

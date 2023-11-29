@@ -46,5 +46,18 @@
       }
 
     }
+  ],  "rollbacks": [
+    {
+      "type": "action",
+      "name": "start-process",
+      "provider": {
+        "type": "python",
+        "module": "processStarting",
+        "func": "start_process_by_path",
+        "arguments": {
+          "path": "C:\\Program Files\\KeePassXC\\KeePassXC.exe"
+        }
+      }
+    }
   ]
 }
