@@ -41,7 +41,8 @@
         "func": "get_duration_until_process_started",
         "arguments": {
           "process_name": "KeePassXC.exe",
-          "monitoring_duration_sec": 10
+          "monitoring_duration_sec": 10,
+          "checking_interval_sec": 0
         }
       }
 
