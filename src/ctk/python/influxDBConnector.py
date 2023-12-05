@@ -2,13 +2,13 @@ import influxdb_client, os, time
 from influxdb_client import InfluxDBClient, Point, WritePrecision
 from influxdb_client.client.write_api import SYNCHRONOUS
 
-token = "6DPUgkuluiglJehGcOIalA8advCMp7KM6i69o_rtcPloBy9y8XX_Uks8vAdzVAaz9uJmDox96tjOSYSWAdWznw==" # os.environ.get("INFLUXDB_TOKEN")
+token = "PpJnMqWR0RkZGbd6GxocbTs9VyiHjFnOKpCiTVRaPYc3qySPKgS8oevYQwq0DNnnX7NZRlzcaAZ6bfcU5f1cuw==" # os.environ.get("INFLUXDB_TOKEN")
 org = "Dqualizer"
-url = "http://localhost:7887"
+url = "http://localhost:8086"
 
 write_client = influxdb_client.InfluxDBClient(url=url, token=token, org=org)
 
-bucket = "ResilienceMonitoringData"
+bucket = "ResilienceTesting"
 
 write_api = write_client.write_api(write_options=SYNCHRONOUS)
 query_api = write_client.query_api()
