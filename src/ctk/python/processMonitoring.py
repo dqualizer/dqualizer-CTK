@@ -5,16 +5,18 @@ import psutil
 import influxDBConnector
 
 
-def check_process_exists(process_name):
+def check_process_exists(process_name, log_result_in_influx_db):
     print("checking " + datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
     for process in psutil.process_iter(['pid', 'name']):
         # print(process)
         if process.info['name'] == process_name:
-            influxDBConnector.write_monitoring_data("process_running", "process_name", process_name, "is_running",
-                                                    True)
+            if log_result_in_influx_db:
+                influxDBConnector.write_monitoring_data("process_running", "process_name", process_name, "is_running",
+                                                        True)
             return True
 
-    influxDBConnector.write_monitoring_data("process_running", "process_name", process_name, "is_running", False)
+    if log_result_in_influx_db:
+        influxDBConnector.write_monitoring_data("process_running", "process_name", process_name, "is_running", False)
     return False
 
 
@@ -23,7 +25,7 @@ def get_duration_until_process_started(process_name, monitoring_duration_sec, ch
     # print("monitoring_start_time", monitoring_start_time)
 
     while (datetime.now() - monitoring_start_time).total_seconds() < monitoring_duration_sec:
-        if check_process_exists(process_name):
+        if check_process_exists(process_name, True):
             duration_until_process_started = datetime.now() - monitoring_start_time
             print(f"The process '{process_name}' exists. It took {duration_until_process_started} to restart.")
             return duration_until_process_started.total_seconds()  # Exit the loop if the process is found
@@ -37,6 +39,4 @@ def get_duration_until_process_started(process_name, monitoring_duration_sec, ch
         return None
 
 
-get_duration_until_process_started("KeePassXC.exe", 5, 0)
-
-
+# get_duration_until_process_started("KeePassXC.exe", 5, 0)
