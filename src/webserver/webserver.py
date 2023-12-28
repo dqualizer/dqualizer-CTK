@@ -10,6 +10,7 @@ class HTTPRequestHandler(SimpleHTTPRequestHandler):
         if processMonitoring.check_process_exists(processNameToCheck, False):
             self.send_response(200)
             self.send_header('Content-type', 'text/html')
+            self.send_header('Connection', 'close')  # Disable keep-alive Connections
             self.end_headers()
 
             # Send the response content
@@ -25,6 +26,7 @@ class HTTPRequestHandler(SimpleHTTPRequestHandler):
             # Send the HTTP response headers
             self.send_response(200)
             self.send_header('Content-type', 'text/html')
+            self.send_header('Connection', 'close')  # Disable keep-alive Connections
             self.end_headers()
 
             # Send the response content
