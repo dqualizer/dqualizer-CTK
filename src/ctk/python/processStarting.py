@@ -5,7 +5,7 @@ import subprocess
 
 def start_process_by_path(path):
     print(f"Start process: '{path}'")
-    subprocess.run([path], shell=True)
+    subprocess.Popen([path], shell=True)
 
 
 # Backslashes werden in Python escaped
