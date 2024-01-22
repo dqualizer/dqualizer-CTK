@@ -1,13 +1,13 @@
 from http.server import SimpleHTTPRequestHandler
 import time
-import processAPI
+import processMonitoring
 
 processNameToCheck = "KeePassXC.exe"
 
 
 class HTTPRequestHandler(SimpleHTTPRequestHandler):
     def do_GET(self):
-        if processAPI.processAPI.get_process_exists(processNameToCheck, False):
+        if processMonitoring.check_process_exists(processNameToCheck, False):
             self.send_response(200)
             self.send_header('Content-type', 'text/html')
             self.send_header('Connection', 'close')  # Disable keep-alive Connections
