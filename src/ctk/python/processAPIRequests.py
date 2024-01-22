@@ -4,7 +4,7 @@ import time
 import requests
 import influxDBConnector
 
-base_url = "http://127.0.0.1:443"
+base_url = "http://127.0.0.1:3323"
 request_timeout_sec = 5
 
 
@@ -79,5 +79,3 @@ def request_kill_process_by_name(process_name):
 
 
 
-
-request_kill_process_by_name('KeePassXC.exe')
