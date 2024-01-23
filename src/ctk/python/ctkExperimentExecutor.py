@@ -53,9 +53,9 @@ def execute_experiment():
         env[
             "PYTHONPATH"] = f"{custom_modules_path}:{env.get('PYTHONPATH', '')}" if runningOnLinux else f"{custom_modules_path};{env.get('PYTHONPATH', '')}"
         print("PYTHONPATH: " + env["PYTHONPATH"])
-        subprocess.run(["chaos", "run", experiment_path, "--journal-path", journal_path], env=env, shell=True,
-                       check=True, capture_output=True,
-                       text=True)
+        result = subprocess.run(["chaos", "run", experiment_path, "--journal-path", journal_path], env=env, shell=True,
+                                check=True, capture_output=True,
+                                text=True)
         # result = subprocess.run(["python", "-c", "import sys; print(sys.path)"], env=env, shell=True, check=True,
         #                capture_output=True, text=True)
         # print(result)
@@ -63,11 +63,18 @@ def execute_experiment():
     except subprocess.CalledProcessError as e:
         print(f"Error: {e}")
         print(f"stderr: {e.stderr}")
+        print(f"stderr: {e.stdout}")
         return jsonify({"exit_code": e.returncode,
-                        "status": f"Experiment at {experiment_path} was executed and resulted in code {e.returncode}, {e.stderr}."})
+                        "status": f"Experiment at {experiment_path} was NOT successfully executed, resulted in code {e.returncode}.",
+                        "ctk_logs": e.stderr,
+                        "custom_modules_logs": e.stdout}) #TODO or result.stdout?!
 
+    print(f"stderr: {result.stderr}")
+    print(f"stdout: {result.stdout}")
     return jsonify({"exit_code": 0,
-                    "status": f"Experiment at {experiment_path} was successfully executed. See experiment journal at {journal_filename}."})
+                    "status": f"Experiment at {experiment_path} was successfully executed. See experiment journal at {journal_filename}.",
+                    "ctk_logs": result.stderr,
+                    "custom_modules_logs": result.stdout})
 
 
 if __name__ == '__main__':
