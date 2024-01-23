@@ -1,6 +1,6 @@
 from http.server import SimpleHTTPRequestHandler
 import time
-import processMonitoring
+from src.ctk.python import processMonitoring
 
 processNameToCheck = "KeePassXC.exe"
 
