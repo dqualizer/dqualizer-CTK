@@ -1,5 +1,5 @@
-import influxdb_client, os, time
-from influxdb_client import InfluxDBClient, Point, WritePrecision
+import influxdb_client, time
+from influxdb_client import Point
 from influxdb_client.client.write_api import SYNCHRONOUS
 
 token = "6DPUgkuluiglJehGcOIalA8advCMp7KM6i69o_rtcPloBy9y8XX_Uks8vAdzVAaz9uJmDox96tjOSYSWAdWznw==" # os.environ.get("INFLUXDB_TOKEN")

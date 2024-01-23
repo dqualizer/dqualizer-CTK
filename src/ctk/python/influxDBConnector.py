@@ -1,5 +1,5 @@
-import influxdb_client, os, time
-from influxdb_client import InfluxDBClient, Point, WritePrecision
+import influxdb_client
+from influxdb_client import Point
 from influxdb_client.client.write_api import SYNCHRONOUS
 
 
