@@ -1,4 +1,5 @@
 import sys
+import threading
 
 from flask import Flask, request, jsonify
 import os
@@ -9,10 +10,17 @@ app = Flask(__name__)
 generated_experiments_volume_path = "C:\\Users\\HenningMöllers\\IdeaProjects\\dqualizer\\docker-output\\generated_experiments"
 
 
+def print_output_and_accumulate(stream, prefix, accumulator):
+    for line in iter(stream.readline, ''):
+        accumulator += line
+        sys.stdout.write(f"{prefix}: {line}")
+        sys.stdout.flush()
+    stream.close()
+
+
 @app.route('/execute_experiment', methods=['POST'])
 def execute_experiment():
     experiment_filename = request.args.get('experiment_filename')
-    # CTK logs experiment in journal path
     journal_filename = request.args.get('journal_filename')
 
     if not experiment_filename:
@@ -25,56 +33,68 @@ def execute_experiment():
         print(f"There is no file existing at given path: {experiment_path}")
         return jsonify({"error": f"There is no file existing at given path: {experiment_path}"}), 400
 
-    print(f"Executing chaos run on {experiment_path}")
     current_script_path = os.path.abspath(__file__)
-    # print(current_script_path)
     current_project_path = os.path.abspath(
         os.path.join(current_script_path, os.pardir, os.pardir, os.pardir, os.pardir))
-    # print(current_project_path)
 
     # Path to the virtual environment's activation script (adjust depending on Windows or Linux)
-    runningOnLinux = os.name != "nt"
+    running_on_linux = os.name != "nt"
     venv_activate_script_path = os.path.join(current_project_path, "venv", "bin",
-                                             "activate") if runningOnLinux else os.path.join(current_project_path,
-                                                                                             "venv", "Scripts",
-                                                                                             "activate")
+                                             "activate") if running_on_linux else os.path.join(current_project_path,
+                                                                                               "venv", "Scripts",
+                                                                                               "activate")
     # print(venv_activate_script_path)
 
     # result = subprocess.run(["echo", "a"], shell=True, check=True, capture_output=True, text=True)
     # result = subprocess.run(["pip", "list"], shell=True, check=True, capture_output=True, text=True)
 
-    try:
-        subprocess.run([venv_activate_script_path], shell=True, check=True, capture_output=True, text=True)
-        # subprocess.run(["set", f"PYTHONPATH={current_project_path}"], shell=True, check=True, capture_output=True, text=True)
-        # subprocess.run(["echo", "%PYTHONPATH%"], shell=True, check=True, capture_output=True, text=True)
-        env = os.environ.copy()
-        custom_modules_path = os.path.join(current_project_path, "src", "ctk", "python")
-        print(custom_modules_path)
-        env[
-            "PYTHONPATH"] = f"{custom_modules_path}:{env.get('PYTHONPATH', '')}" if runningOnLinux else f"{custom_modules_path};{env.get('PYTHONPATH', '')}"
-        print("PYTHONPATH: " + env["PYTHONPATH"])
-        result = subprocess.run(["chaos", "run", experiment_path, "--journal-path", journal_path], env=env, shell=True,
-                                check=True, capture_output=True,
-                                text=True)
-        # result = subprocess.run(["python", "-c", "import sys; print(sys.path)"], env=env, shell=True, check=True,
-        #                capture_output=True, text=True)
-        # print(result)
+    # Activate virtual environment to enable access to CTK lib
+    subprocess.run([venv_activate_script_path], shell=True, check=True, capture_output=True, text=True)
+    # subprocess.run(["set", f"PYTHONPATH={current_project_path}"], shell=True, check=True, capture_output=True, text=True)
+    # subprocess.run(["echo", "%PYTHONPATH%"], shell=True, check=True, capture_output=True, text=True)
 
-    except subprocess.CalledProcessError as e:
-        print(f"Error: {e}")
-        print(f"stderr: {e.stderr}")
-        print(f"stderr: {e.stdout}")
-        return jsonify({"exit_code": e.returncode,
-                        "status": f"Experiment at {experiment_path} was NOT successfully executed, resulted in code {e.returncode}.",
-                        "ctk_logs": e.stderr,
-                        "custom_modules_logs": e.stdout}) #TODO or result.stdout?!
+    # Setup python path environment variable to enable access to custom CTK scripts
+    env = os.environ.copy()
+    custom_modules_path = os.path.join(current_project_path, "src", "ctk", "python")
+    #print(custom_modules_path)
+    env["PYTHONPATH"] = f"{custom_modules_path}:{env.get('PYTHONPATH', '')}" if running_on_linux else f"{custom_modules_path};{env.get('PYTHONPATH', '')}"
+    print("PYTHONPATH: " + env["PYTHONPATH"])
 
-    print(f"stderr: {result.stderr}")
-    print(f"stdout: {result.stdout}")
-    return jsonify({"exit_code": 0,
-                    "status": f"Experiment at {experiment_path} was successfully executed. See experiment journal at {journal_filename}.",
-                    "ctk_logs": result.stderr,
-                    "custom_modules_logs": result.stdout})
+    # Run CTK experiment
+    print(f"Executing chaos run on {experiment_path}")
+    process = subprocess.Popen(["chaos", "run", experiment_path, "--journal-path", journal_path],
+                               env=env,
+                               shell=True,
+                               stdout=subprocess.PIPE,
+                               stderr=subprocess.PIPE,
+                               text=True)
+
+    # Lists to accumulate stdout and stderr logs from the subprocess (Strings are immutable)
+    stdout_list = []
+    stderr_list = []
+
+    # Start separate threads to read stdout and stderr
+    stdout_thread = threading.Thread(target=print_output_and_accumulate, args=(process.stdout, "stdout", stdout_list))
+    stderr_thread = threading.Thread(target=print_output_and_accumulate, args=(process.stderr, "stderr", stderr_list))
+
+    stdout_thread.start()
+    stderr_thread.start()
+
+    # Wait for the process to finish
+    return_code = process.wait()
+
+    # Wait for the output reading threads to finish
+    stdout_thread.join()
+    stderr_thread.join()
+
+    # Convert the accumulated lists to strings
+    stdout_str = ''.join(stdout_list)
+    stderr_str = ''.join(stderr_list)
+
+    return jsonify({"exit_code": return_code,
+                    "status": f"Experiment at {experiment_path} was executed. See experiment journal at {journal_path}.",
+                    "ctk_logs": stderr_str,
+                    "custom_modules_logs": stdout_str})
 
 
 if __name__ == '__main__':
