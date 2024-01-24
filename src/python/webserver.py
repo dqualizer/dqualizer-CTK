@@ -1,10 +1,13 @@
+# At least on Windows venv seems to be missing in PYTHONPATH after venv activation, so we add it to find
+# modules
 import os
 import sys
 current_script_path = os.path.abspath(__file__)
 current_project_path = os.path.abspath(
     os.path.join(current_script_path, os.pardir, os.pardir, os.pardir))
 
-venv_path = os.path.join(current_project_path, 'venv', 'lib', 'site-packages')
+running_on_linux = os.name != "nt"
+venv_path = os.path.join(current_project_path, 'venv', 'lib', 'python3.10', 'site-packages') if running_on_linux else os.path.join(current_project_path, 'venv', 'Lib', 'site-packages')
 sys.path.insert(0, venv_path)
 print(sys.path)
 
