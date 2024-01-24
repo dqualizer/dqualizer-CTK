@@ -38,19 +38,22 @@ def execute_experiment():
     current_project_path = os.path.abspath(
         os.path.join(current_script_path, os.pardir, os.pardir, os.pardir))
 
+    # Activate virtual environment to enable access to CTK lib
     # Path to the virtual environment's activation script (adjust depending on Windows or Linux)
     running_on_linux = os.name != "nt"
-    venv_activate_script_path = os.path.join(current_project_path, "venv", "bin",
-                                             "activate") if running_on_linux else os.path.join(current_project_path,
-                                                                                               "venv", "Scripts",
-                                                                                               "activate")
-    # print(venv_activate_script_path)
+    if running_on_linux:
+        venv_activate_script_path = os.path.join(current_project_path, "venv", "bin", "activate")
+        # print(venv_activate_script_path)
+        subprocess.run(["/bin/bash", "-c", f"source {venv_activate_script_path}"], check=True, capture_output=True, text=True)
+
+    else:
+        venv_activate_script_path = os.path.join(current_project_path, "venv", "Scripts", "activate")
+        # print(venv_activate_script_path)
+        subprocess.run([venv_activate_script_path], shell=True, check=True, capture_output=True, text=True)
 
     # result = subprocess.run(["echo", "a"], shell=True, check=True, capture_output=True, text=True)
     # result = subprocess.run(["pip", "list"], shell=True, check=True, capture_output=True, text=True)
 
-    # Activate virtual environment to enable access to CTK lib
-    subprocess.run([venv_activate_script_path], shell=True, check=True, capture_output=True, text=True)
     # subprocess.run(["set", f"PYTHONPATH={current_project_path}"], shell=True, check=True, capture_output=True, text=True)
     # subprocess.run(["echo", "%PYTHONPATH%"], shell=True, check=True, capture_output=True, text=True)
 
@@ -63,13 +66,22 @@ def execute_experiment():
     print("PYTHONPATH: " + env["PYTHONPATH"])
 
     # Run CTK experiment
+    process = None
     print(f"Executing chaos run on {experiment_path}")
-    process = subprocess.Popen(["chaos", "run", experiment_path, "--journal-path", journal_path],
-                               env=env,
-                               shell=True,
-                               stdout=subprocess.PIPE,
-                               stderr=subprocess.PIPE,
-                               text=True)
+    if running_on_linux:
+        process = subprocess.Popen(["chaos", "run", experiment_path, "--journal-path", journal_path],
+                                   env=env,
+                                   shell=True,
+                                   stdout=subprocess.PIPE,
+                                   stderr=subprocess.PIPE,
+                                   text=True)
+
+    else:
+        process = subprocess.Popen(["chaos", "run", experiment_path, "--journal-path", journal_path],
+                                   env=env,
+                                   stdout=subprocess.PIPE,
+                                   stderr=subprocess.PIPE,
+                                   text=True)
 
     # Lists to accumulate stdout and stderr logs from the subprocess (Strings are immutable)
     stdout_list = []
