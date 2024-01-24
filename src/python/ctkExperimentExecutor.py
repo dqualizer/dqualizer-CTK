@@ -36,7 +36,7 @@ def execute_experiment():
 
     current_script_path = os.path.abspath(__file__)
     current_project_path = os.path.abspath(
-        os.path.join(current_script_path, os.pardir, os.pardir, os.pardir, os.pardir))
+        os.path.join(current_script_path, os.pardir, os.pardir, os.pardir))
 
     # Path to the virtual environment's activation script (adjust depending on Windows or Linux)
     running_on_linux = os.name != "nt"
@@ -56,7 +56,7 @@ def execute_experiment():
 
     # Setup python path environment variable to enable access to custom CTK scripts
     env = os.environ.copy()
-    custom_modules_path = os.path.join(current_project_path, "src", "python", "ctk")
+    custom_modules_path = os.path.join(current_project_path, "src", "python")
     # print(custom_modules_path)
     env[
         "PYTHONPATH"] = f"{custom_modules_path}:{env.get('PYTHONPATH', '')}" if running_on_linux else f"{custom_modules_path};{env.get('PYTHONPATH', '')}"
