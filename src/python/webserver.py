@@ -1,13 +1,22 @@
+import os
+import sys
+current_script_path = os.path.abspath(__file__)
+current_project_path = os.path.abspath(
+    os.path.join(current_script_path, os.pardir, os.pardir, os.pardir, os.pardir))
+
+venv_path = os.path.join(current_project_path, 'venv')
+sys.path.insert(0, venv_path)
+
 from http.server import SimpleHTTPRequestHandler
 import time
-from src.ctk.python import processMonitoring
+from processMonitoring import check_process_exists
 
 processNameToCheck = "KeePassXC.exe"
 
 
 class HTTPRequestHandler(SimpleHTTPRequestHandler):
     def do_GET(self):
-        if processMonitoring.check_process_exists(processNameToCheck, False):
+        if check_process_exists(processNameToCheck, False):
             self.send_response(200)
             self.send_header('Content-type', 'text/html')
             self.send_header('Connection', 'close')  # Disable keep-alive Connections

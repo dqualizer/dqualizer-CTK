@@ -56,7 +56,7 @@ def execute_experiment():
 
     # Setup python path environment variable to enable access to custom CTK scripts
     env = os.environ.copy()
-    custom_modules_path = os.path.join(current_project_path, "src", "ctk", "python")
+    custom_modules_path = os.path.join(current_project_path, "src", "python", "ctk")
     # print(custom_modules_path)
     env[
         "PYTHONPATH"] = f"{custom_modules_path}:{env.get('PYTHONPATH', '')}" if running_on_linux else f"{custom_modules_path};{env.get('PYTHONPATH', '')}"
