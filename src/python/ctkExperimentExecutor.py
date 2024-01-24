@@ -71,7 +71,6 @@ def execute_experiment():
     if running_on_linux:
         process = subprocess.Popen(["chaos", "run", experiment_path, "--journal-path", journal_path],
                                    env=env,
-                                   shell=True,
                                    stdout=subprocess.PIPE,
                                    stderr=subprocess.PIPE,
                                    text=True)
@@ -79,6 +78,7 @@ def execute_experiment():
     else:
         process = subprocess.Popen(["chaos", "run", experiment_path, "--journal-path", journal_path],
                                    env=env,
+                                   shell=True,
                                    stdout=subprocess.PIPE,
                                    stderr=subprocess.PIPE,
                                    text=True)
