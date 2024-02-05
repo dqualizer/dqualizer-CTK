@@ -3,7 +3,7 @@ import subprocess
 
 # Alternativ mit import os, os.system(command) aber nicht empfohlen
 
-def start_process_by_path(path):
+def start_process_by_path(db_username, db_password, username, password, path, log_result_in_influx_db):
     print(f"Please start process at {path} manually.")
     #subprocess.Popen([path], shell=True)
 
