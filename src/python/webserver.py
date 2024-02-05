@@ -21,6 +21,10 @@ processNameToCheck = "KeePassXC.exe"
 
 class HTTPRequestHandler(SimpleHTTPRequestHandler):
     def do_GET(self):
+        print("\nHeaders received:")
+        for key, value in self.headers.items():
+            print(f"{key}: {value}")
+
         if check_process_exists(processNameToCheck, False):
             self.send_response(200)
             self.send_header('Content-type', 'text/html')
