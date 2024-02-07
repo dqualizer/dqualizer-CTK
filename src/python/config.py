@@ -6,7 +6,6 @@ db_base_config = {
     # Username and password are not declared here, see mySqlConnector.py
     'host': 'localhost',
     'port': '3306',
-    # Port probably has to be defined as own argument nt inside host
-    'database': 'user',
+    'database': 'authentication',
     'raise_on_warnings': True
 }
