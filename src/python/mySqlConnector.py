@@ -24,16 +24,12 @@ def authenticate_user(connection, username, password):
     sha256 = hashlib.sha256()
     sha256.update(password.encode('utf-8'))
 
-    # Create a cursor to execute SQL queries
     cursor = connection.cursor()
-
-    # Use parameterized query to check user and password
-    query = "SELECT * FROM users WHERE username = %s AND password_hash = %s"
+    query = "SELECT COUNT(*) FROM users WHERE username = %s AND password_hash = %s"
     cursor.execute(query, (username, sha256.hexdigest()))
 
-    # Fetch the result
-    authenticated = cursor.fetchone()
-
-    # Close the cursor
+    result = cursor.fetchone()
     cursor.close()
+
+    authenticated = result[0] > 0
     return authenticated
