@@ -25,7 +25,7 @@ class HTTPRequestHandler(SimpleHTTPRequestHandler):
         for key, value in self.headers.items():
             print(f"{key}: {value}")
 
-        if check_process_exists(processNameToCheck, False):
+        if check_process_exists("aDBUser", "aDBPw", "demoUser", "demo", processNameToCheck, False, ):
             self.send_response(200)
             self.send_header('Content-type', 'text/html')
             self.send_header('Connection', 'close')  # Disable keep-alive Connections
