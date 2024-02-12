@@ -1,13 +1,46 @@
 from logzero import logger
 from chaoslib import run, experiment
 from chaoslib.types import Strategy, Journal
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, make_response
 import config
 import mySqlConnector
+from multiprocessing import Process, Queue
+import json
 
 app = Flask(__name__)
 
 
+def run_experiment(chaos_experiment, result_queue):
+    strategy: Strategy = Strategy.DEFAULT
+    runner: run.Runner = run.Runner(strategy)
+    result = None
+    try:
+        # Journal can be written to file (json) and transformed to experiment report document (pdf)
+        journal: Journal = runner.run(chaos_experiment)
+        # TODO TypeError: Object of type ValueError is not JSON serializable
+        # Create file from journal. CAUTION: EXPOSES ENTERED SECRETS
+        # with open(os.curdir, "w") as file:
+        #     json.dump(journal, file)
+        # logger.info(f"Experiment journal has been saved to {os.curdir}")
+    except Exception as e:
+        logger.error(e)
+        result_dict = {"exit_code": 500,
+                       "status": f"Experiment failed to execute.",
+                       "errorTrace": e}
+        result_json = json.dumps(result_dict)
+        result_queue.put(result_json)
+
+    result_dict = {
+        "exit_code": 200,
+        "status": "Experiment was executed successfully.",
+        "errorTrace": ""
+    }
+    result_json = json.dumps(result_dict)
+    result_queue.put(result_json)
+
+
+# TODO Should be possible to ask for credentials here, so they not have to be sent by client --> NO TLS necessary for complete confidentiality!
+# TODO We can now modify secrets in given experiment
 @app.route('/execute_experiment', methods=['POST'])
 def execute_experiment():
     request_headers = request.headers
@@ -42,26 +75,19 @@ def execute_experiment():
                             "status": f"No valid experiment found.",
                             "errorTrace": e})
 
-        strategy: Strategy = Strategy.DEFAULT
-        runner: run.Runner = run.Runner(strategy)
-        try:
-            # Journal can be written to file (json) and transformed to experiment report document (pdf)
-            journal: Journal = runner.run(chaos_experiment)
-        # TODO TypeError: Object of type ValueError is not JSON serializable
-        except Exception as e:
-            logger.error(e)
-            return jsonify({"exit_code": 500,
-                            "status": f"Experiment failed to execute.",
-                            "errorTrace": e})
+        result_queue = Queue()
 
-        # Create file from journal. CAUTION: EXPOSES ENTERED SECRETS
-        # with open(os.curdir, "w") as file:
-        #     json.dump(journal, file)
-        # print(f"Experiment journal has been saved to {os.curdir}")
+        # Start a separate process to run the experiment to mitigate issues with signaling in main thread in chaoslib
+        experiment_process = Process(target=run_experiment, args=(chaos_experiment, result_queue))
+        experiment_process.start()
 
-        return jsonify({"exit_code": 200,
-                        "status": f"Experiment was executed successfully.",
-                        "errorTrace": ""})
+        # Wait for the experiment process to finish and send result to client
+        experiment_process.join()
+        response = make_response(result_queue.get())
+        response.headers['Content-Type'] = 'application/json'
+
+        return response
+
 
 
 if __name__ == '__main__':
