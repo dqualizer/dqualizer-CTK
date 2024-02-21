@@ -3,6 +3,7 @@ from chaoslib import run, experiment
 from chaoslib.types import Strategy, Journal
 from flask import Flask, request, jsonify, make_response
 import config
+import influxDBConnector
 import mySqlConnector
 from multiprocessing import Process, Queue
 import json
@@ -30,6 +31,7 @@ def run_experiment(chaos_experiment, result_queue):
         result_queue.put(result_json)
 
     result_dict = {
+        # TODO wrongly returns 'completed' if rollback fails!
         "status_code": 200 if journal["status"] == "completed" else 500,
         "status": f"Experiment was executed and terminated with status: {journal["status"]}.",
         "info": "See Python logs, (experiment journal) and dashboards for result infos"
@@ -72,6 +74,18 @@ def execute_experiment():
                             "status": f"No valid experiment found.",
                             "info": e})
 
+        # only considers one defined response measure at the moment, as it is not possible to define multiple at the moment
+        # TODO add cases for other resilience response measures 'expected_error_rate_percent', 'expected_response_time_ms'
+        extensions = chaos_experiment.get('extensions', None)
+        if extensions is not None:
+            response_measure_extension = chaos_experiment['extensions'][0]
+            expected_recovery_time = response_measure_extension.get('expected_recovery_time_ms', None)
+            if expected_recovery_time is not None:
+                influxDBConnector.write_monitoring_data("expected_response_measure", "",
+                                                        "",
+                                                        'expected_recovery_time',
+                                                        expected_recovery_time)
+
         result_queue = Queue()
 
         # Start a separate process to run the experiment to mitigate issues with signaling in main thread in chaoslib
@@ -84,7 +98,6 @@ def execute_experiment():
         response.headers['Content-Type'] = 'application/json'
 
         return response
-
 
 
 if __name__ == '__main__':
