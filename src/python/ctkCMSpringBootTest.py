@@ -30,12 +30,12 @@ experiment: Experiment = {
                         "deterministic": 'True',
                         "latencyRangeStart": 2000,
                         "latencyRangeEnd": 2000,
-                        "latencyActive": 'True',
-                        "exceptionsActive": 'False',
+                        "latencyActive": 'False',
+                        "exceptionsActive": 'True',
                         "killApplicationActive": 'False',
                         "restartApplicationActive": 'False',
                         "watchedCustomServices": [
-                            "dqualizer.fibumock.stammdaten.zuordnung.ZuordnungService"
+                            "dqualizer.fibumock.stammdaten.zuordnung.ZuordnungService.initializeNewZuordnungForBetriebId"
                         ]
                     }
                 },
@@ -71,7 +71,8 @@ experiment: Experiment = {
 
                 }
             }
-        },
+        }
+        ,
 
         {
             "name": "disable",
