@@ -1,8 +1,10 @@
+import subprocess
 from datetime import datetime
 import time
 import psutil
 import influxDBConnector
 import mySqlConnector
+import os
 
 
 def check_process_exists(db_username, db_password, username, password, process_name, log_result_in_influx_db):
@@ -12,12 +14,21 @@ def check_process_exists(db_username, db_password, username, password, process_n
     if authenticated:
 
         print("checking " + datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+        # check non-jvm processes for matching process name
         for process in psutil.process_iter(['pid', 'name']):
-            # print(process)
             if process.info['name'] == process_name:
                 if log_result_in_influx_db:
                     influxDBConnector.write_monitoring_data("process_running", "process_name", process_name, "is_running",
                                                             True)
+                return True
+
+        # check jvm processes for matching process name
+        os.environ['PATH'] = "C:\\Users\\HenningMöllers\\.jdks\\openjdk-20.0.1\\bin"
+        jps_processes = subprocess.check_output(["jps"]).decode("utf-8").split("\n")
+        for line in jps_processes:
+            if process_name in line:
+                influxDBConnector.write_monitoring_data("process_running", "process_name", process_name, "is_running",
+                                                        True)
                 return True
 
         if log_result_in_influx_db:
