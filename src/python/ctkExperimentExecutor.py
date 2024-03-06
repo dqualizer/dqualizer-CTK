@@ -1,3 +1,5 @@
+import os
+
 from logzero import logger
 from chaoslib import run, experiment
 from chaoslib.types import Strategy, Journal
@@ -19,9 +21,10 @@ def run_experiment(chaos_experiment, result_queue):
         # Journal can be written to file (json) and transformed to experiment report document (pdf)
         journal: Journal = runner.run(chaos_experiment)
         # Create file from journal. CAUTION: EXPOSES ENTERED SECRETS
-        # with open(os.curdir, "w") as file:
-        #     json.dump(journal, file)
-        # logger.info(f"Experiment journal has been saved to {os.curdir}")
+        journal_path = os.path.join(os.curdir, "journal.json")
+        with open(journal_path, "w") as file:
+            json.dump(journal, file, indent=4)
+            logger.info(f">>>>>>> Experiment journal has been saved to {journal_path}")
     except Exception as e:
         logger.error(e)
         result_dict = {"status_code": 500,
@@ -66,6 +69,11 @@ def execute_experiment():
 
     else:
         chaos_experiment = request.get_json()
+        # Create file from experiment. CAUTION: EXPOSES ENTERED SECRETS
+        experiment_path = os.path.join(os.curdir, "experiment.json")
+        with open(experiment_path, "w") as file:
+            json.dump(chaos_experiment, file, indent=4)
+            logger.info(f">>>>>>> Received chaos experiment has been saved to {experiment_path}")
         try:
             experiment.ensure_experiment_is_valid(chaos_experiment)
         except Exception as e:
