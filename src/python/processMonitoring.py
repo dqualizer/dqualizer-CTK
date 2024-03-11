@@ -49,6 +49,10 @@ def get_duration_until_process_started(db_username, db_password, username, passw
         if check_process_exists(db_username, db_password, username, password, process_name, True):
             duration_until_process_started = datetime.now() - monitoring_start_time
             print(f"The process '{process_name}' exists. It took {duration_until_process_started} to restart.")
+            influxDBConnector.write_monitoring_data("actual_response_measure", "",
+                                                    "",
+                                                    'actual_recovery_time',
+                                                    duration_until_process_started.total_seconds())
             return duration_until_process_started.total_seconds()  # Exit the loop if the process is found
 
         # Wait for a short interval before checking again
@@ -57,6 +61,9 @@ def get_duration_until_process_started(db_username, db_password, username, passw
 
     else:
         print(f"The process '{process_name}' was not found within {monitoring_duration_sec} seconds.")
+        influxDBConnector.write_monitoring_data("actual_response_measure", "",
+                                                "",
+                                                'actual_recovery_time', None)
         return None
 
 
