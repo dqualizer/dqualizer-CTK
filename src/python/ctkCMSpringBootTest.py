@@ -11,7 +11,7 @@ experiment: Experiment = {
             "name": "enable_chaosmonkey",
             "provider": {
                 "arguments": {
-                    "base_url": "http://localhost:18080/actuator"
+                    "base_url": "http://localhost:7081/actuator"
                 },
                 "func": "enable_chaosmonkey",
                 "module": "chaosspring.actions",
@@ -24,18 +24,18 @@ experiment: Experiment = {
             "name": "configure_assaults",
             "provider": {
                 "arguments": {
-                    "base_url": "http://localhost:18080/actuator",
+                    "base_url": "http://localhost:7081/actuator",
                     "assaults_configuration": {
                         "level": 1,
                         "deterministic": 'True',
-                        "latencyRangeStart": 2000,
-                        "latencyRangeEnd": 2000,
-                        "latencyActive": 'False',
-                        "exceptionsActive": 'True',
+                        "latencyRangeStart": 4000,
+                        "latencyRangeEnd": 4000,
+                        "latencyActive": 'True',
+                        "exceptionsActive": 'False',
                         "killApplicationActive": 'False',
                         "restartApplicationActive": 'False',
                         "watchedCustomServices": [
-                            "dqualizer.fibumock.stammdaten.zuordnung.ZuordnungService.initializeNewZuordnungForBetriebId"
+                            "io.leasingninja.riskapi.domain.RiskApiService.calculateVoteResult"
                         ]
                     }
                 },
@@ -53,7 +53,7 @@ experiment: Experiment = {
                 "module": "chaosspring.actions",
                 "func": "change_watchers_configuration",
                 "arguments": {
-                    "base_url": "http://localhost:18080/actuator",
+                    "base_url": "http://localhost:7081/actuator",
                     "watchers_configuration": {
 
                             "controller": 'False',
@@ -72,20 +72,20 @@ experiment: Experiment = {
                 }
             }
         }
-        ,
+        # ,
 
-        {
-            "name": "disable",
-            "type": "probe",
-            "provider": {
-                "type": "python",
-                "module": "chaosspring.actions",
-                "func": "disable_chaosmonkey",
-                "arguments": {
-                    "base_url": "http://localhost:18080/actuator",
-                }
-            }
-        }
+        # {
+        #     "name": "disable",
+        #     "type": "probe",
+        #     "provider": {
+        #         "type": "python",
+        #         "module": "chaosspring.actions",
+        #         "func": "disable_chaosmonkey",
+        #         "arguments": {
+        #             "base_url": "http://localhost:18080/actuator",
+        #         }
+        #     }
+        # }
     ]
 }
 
