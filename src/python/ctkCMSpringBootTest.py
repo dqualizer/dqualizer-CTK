@@ -1,9 +1,8 @@
-from chaoslib import run
+from chaoslib import run, experiment
 from chaoslib.types import Configuration, Secrets, Experiment, Hypothesis, Journal, Strategy
 import chaosspring
 
-experiment: Experiment = {
-    "secrets":{"authentication":None},
+chaos_experiment: Experiment = {
     "title": "No description",
     "description": "No description",
     "method": [
@@ -91,8 +90,9 @@ experiment: Experiment = {
 
 #{"title":"No description","description":"No description","secrets":{"authentication":null},"steady-state-hypothesis":{"title":null,"probes":null},"method":[{"type":"action","name":"enable_chaosmonkey","provider":{"type":"python","module":"chaosspring.actions","func":"enable_chaosmonkey","arguments":{"base_url":"http://localhost:18080/actuator/actuator"}}},{"type":"action","name":"configure_assaults","provider":{"type":"python","module":"chaosspring.actions","func":"change_assaults_configuration","arguments":{"base_url":"http://localhost:18080/actuator/actuator","assault_configuration":{"level":1,"deterministic":true,"latencyRangeStart":2000,"latencyRangeEnd":2000,"latencyActive":true,"exceptionsActive":false,"killApplicationActive":false,"restartApplicationActive":false,"watchedCustomServices":[null]}}}},{"type":"action","name":"configure_watchers","provider":{"type":"python","module":"chaosspring.actions","func":"","arguments":{"base_url":"http://localhost:18080/actuator/actuator","watcher_configuration":{"controller":false,"restController":false,"service":false,"repository":false,"component":false,"restTemplate":false,"webClient":false,"actuatorHealth":false,"beans":[],"beanClasses":[],"excludeClasses":[]}}}}],"rollbacks":[{"type":"action","name":"disable_chaosmonkey","provider":{"type":"python","module":"chaosspring.actions","func":"disable_chaosmonkey","arguments":{"base_url":"http://localhost:18080/actuator/actuator"}}}]}
 
+experiment.ensure_experiment_is_valid(chaos_experiment)
 strategy: Strategy = Strategy.DEFAULT
 
 runner: run.Runner = run.Runner(strategy)
-journal: Journal = runner.run(experiment)
+journal: Journal = runner.run(chaos_experiment)
 print(journal)
