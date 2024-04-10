@@ -20,7 +20,8 @@ def run_experiment(chaos_experiment, result_queue):
     try:
         # Journal can be written to file (json) and transformed to experiment report document (pdf)
         journal: Journal = runner.run(chaos_experiment)
-        # Create file from journal. CAUTION: EXPOSES ENTERED SECRETS
+        # Create file from resulting journal. CAUTION: EXPOSES ENTERED SECRETS WHEN SECRETS WERE DEFINED INLINE,
+        # comment out for production use
         journal_path = os.path.join(os.curdir, "journal.json")
         with open(journal_path, "w") as file:
             json.dump(journal, file, indent=4)
@@ -35,6 +36,7 @@ def run_experiment(chaos_experiment, result_queue):
 
     result_dict = {
         # TODO wrongly returns 'completed' if rollback fails!
+        # throws also 500 status if the experiment terminated with status 'deviated'
         "status_code": 200 if journal["status"] == "completed" else 500,
         "status": f"Experiment was executed and terminated with status: {journal["status"]}.",
         "info": "See Python logs, (experiment journal) and dashboards for result infos"
@@ -69,7 +71,8 @@ def execute_experiment():
 
     else:
         chaos_experiment = request.get_json()
-        # Create file from experiment. CAUTION: EXPOSES ENTERED SECRETS
+        # Create file from experiment. CAUTION: EXPOSES ENTERED SECRETS WHEN SECRETS WERE DEFINED INLINE, comment out
+        # for production use
         experiment_path = os.path.join(os.curdir, "experiment.json")
         with open(experiment_path, "w") as file:
             json.dump(chaos_experiment, file, indent=4)
