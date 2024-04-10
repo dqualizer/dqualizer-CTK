@@ -1,0 +1,86 @@
+{
+    "title": "ResilienceTestDescription",
+    "description": "ResilienceTestDescription",
+    "method": [
+        {
+            "type": "action",
+            "name": "configure_assaults",
+            "provider": {
+                "type": "python",
+                "module": "chaosspring.actions",
+                "func": "change_assaults_configuration",
+                "arguments": {
+                    "base_url": "http://localhost:7081/actuator",
+                    "assaults_configuration": {
+                        "level": 2,
+                        "deterministic": "True",
+                        "latencyRangeStart": 100,
+                        "latencyRangeEnd": 200,
+                        "latencyActive": "True",
+                        "exceptionsActive": "False",
+                        "killApplicationActive": "False",
+                        "restartApplicationActive": "False",
+                        "watchedCustomServices": [
+                            "io.leasingninja.riskapi.domain.RiskApiService.calculateVoteResult"
+                        ]
+                    }
+                }
+            }
+        },
+        {
+            "type": "action",
+            "name": "configure_watchers",
+            "provider": {
+                "type": "python",
+                "module": "chaosspring.actions",
+                "func": "change_watchers_configuration",
+                "arguments": {
+                    "base_url": "http://localhost:7081/actuator",
+                    "watchers_configuration": {
+                        "controller": "false",
+                        "restController": "false",
+                        "service": "true",
+                        "repository": "false",
+                        "component": "false",
+                        "restTemplate": "false",
+                        "webClient": "false",
+                        "actuatorHealth": "false",
+                        "beans": [],
+                        "beanClasses": [],
+                        "excludeClasses": []
+                    }
+                }
+            }
+        },
+        {
+            "type": "action",
+            "name": "enable_chaosmonkey",
+            "provider": {
+                "type": "python",
+                "module": "chaosspring.actions",
+                "func": "enable_chaosmonkey",
+                "arguments": {
+                    "base_url": "http://localhost:7081/actuator"
+                }
+            },
+            "pauses": {
+                "before": 10,
+                "after": 20
+            }
+        }
+    ],
+    "rollbacks": [
+        {
+            "type": "action",
+            "name": "disable_chaosmonkey",
+            "provider": {
+                "type": "python",
+                "module": "chaosspring.actions",
+                "func": "disable_chaosmonkey",
+                "arguments": {
+                    "base_url": "http://localhost:7081/actuator"
+                }
+            }
+        }
+    ]
+}
