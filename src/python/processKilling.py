@@ -11,7 +11,8 @@ def kill_process_by_name(db_username, db_password, username, password, process_n
 
     if authenticated:
         # Get PID, in case searched processes runs in JVM, as they just have the name 'java' in os
-        pid_for_searched_jvm_process = None
+        # initialize with negative PID, as its definitely not found in system processes
+        pid_for_searched_jvm_process = -1
         os.environ['PATH'] = "C:\\Users\\HenningMöllers\\.jdks\\openjdk-20.0.1\\bin"
         jps_processes = subprocess.check_output(["jps"]).decode("utf-8").split("\n")
 
