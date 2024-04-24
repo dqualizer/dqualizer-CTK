@@ -3,6 +3,8 @@ import psutil
 import mySqlConnector
 import os
 
+import processMonitoring
+
 
 # Kill a process cross-platform
 def kill_process_by_name(db_username, db_password, username, password, process_name):
@@ -28,6 +30,7 @@ def kill_process_by_name(db_username, db_password, username, password, process_n
                 print(f"Kill process: '{proc}'")
                 # Do SIGTerm to stop process gracefully, replace with proc.kill() to stop the process forcefully
                 proc.kill()
+                processMonitoring.check_process_exists(db_username, db_password, username, password, process_name, True)
 
                 return True
 
