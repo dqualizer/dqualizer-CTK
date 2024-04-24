@@ -1,5 +1,7 @@
 import os
 import subprocess
+import time
+
 import psutil
 
 import processStarting
@@ -32,7 +34,6 @@ while True:
             process_active = True
 
     if not process_active:
-        #processStarting.start_process_by_path(1,2,3,4,process_path, 5)
-        #subprocess.Popen(["java", "-jar", process_path])
+        time.sleep(1.5)
         processStarting.start_java_process_by_path(1, 2, 3, 4, process_path, 5)
         print(f"Process '{process_name}' NOT found. Restarted it.")
