@@ -25,8 +25,9 @@ def kill_process_by_name(db_username, db_password, username, password, process_n
             # Check for process name or the eventually defined process id
             if proc.name() == process_name or proc.pid == int(pid_for_searched_jvm_process):
                 print(f"Kill process: '{proc}'")
-                # Do SIGKill to stop process gracefully
+                # Do SIGTerm to stop process gracefully, replace with proc.kill() to stop the process forcefully
                 proc.kill()
+
                 return True
 
         print(f"Process to kill '{proc}' was not found found.")
