@@ -1,10 +1,12 @@
 import os
 import subprocess
 import psutil
+
 import processStarting
 
 # This simulates an fallback mechanism, which automatically watches a process and restarts if it is not present anymore
 # As this should be implemented externally, by companys themselves, hardcoded path is okay here
+# THIS NOT INTENDED TO BE USED BY CTK EXPERIMENTS
 
 process_name = "leasingninja-riskApi-0.0.1"
 process_path = "C:\\Users\\HenningMöllers\\IdeaProjects\\leasing-ninja\\leasingninja-riskApi\\target\\leasingninja-riskApi-0.0.1-SNAPSHOT.jar"
@@ -30,5 +32,7 @@ while True:
             process_active = True
 
     if not process_active:
-        processStarting.start_process_by_path(1,2,3,4,process_path, 5)
+        #processStarting.start_process_by_path(1,2,3,4,process_path, 5)
+        #subprocess.Popen(["java", "-jar", process_path])
+        processStarting.start_java_process_by_path(1, 2, 3, 4, process_path, 5)
         print(f"Process '{process_name}' NOT found. Restarted it.")
