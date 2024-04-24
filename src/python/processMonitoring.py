@@ -20,6 +20,7 @@ def check_process_exists(db_username, db_password, username, password, process_n
                 if log_result_in_influx_db:
                     influxDBConnector.write_monitoring_data("process_running", "process_name", process_name, "is_running",
                                                             True)
+                print('Process exists!')
                 return True
 
         # check jvm processes for matching process name
@@ -29,10 +30,14 @@ def check_process_exists(db_username, db_password, username, password, process_n
             if process_name in line:
                 influxDBConnector.write_monitoring_data("process_running", "process_name", process_name, "is_running",
                                                         True)
+                print('Process exists!')
+
                 return True
 
         if log_result_in_influx_db:
             influxDBConnector.write_monitoring_data("process_running", "process_name", process_name, "is_running", False)
+
+        print('Process does NOT exist!')
         return False
 
     # TODO use Exception from chaostoolkit library if available
