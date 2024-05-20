@@ -17,9 +17,14 @@ def run_experiment(chaos_experiment, result_queue):
     strategy: Strategy = Strategy.DEFAULT
     runner: run.Runner = run.Runner(strategy)
     journal = {}
+    settings = {}
+    # The runtime property is only considered, if defined in the CTK settings
+    # Documentation (https://chaostoolkit.org/reference/api/experiment/#runtime) seems to be wrong
+    if chaos_experiment.get("runtime"):
+        settings["runtime"] = chaos_experiment.get("runtime")
     try:
         # Journal can be written to file (json) and transformed to experiment report document (pdf)
-        journal: Journal = runner.run(chaos_experiment)
+        journal: Journal = runner.run(chaos_experiment, settings)
         # Create file from resulting journal. CAUTION: EXPOSES ENTERED SECRETS WHEN SECRETS WERE DEFINED INLINE,
         # comment out for production use
         journal_path = os.path.join(os.curdir, "journal.json")
@@ -85,8 +90,8 @@ def execute_experiment():
                             "status": f"No valid experiment found.",
                             "info": e})
 
-        # only considers one defined response measure at the moment, as it is not possible to define multiple at the moment
-        # TODO add cases for other resilience response measures 'expected_error_rate_percent', 'expected_response_time_ms'
+        # only considers one defined response measure at the moment, as it is not possible to define multiple at the
+        # moment
         extensions = chaos_experiment.get('extensions', None)
         if extensions is not None:
             response_measure_extension = chaos_experiment['extensions'][0]
