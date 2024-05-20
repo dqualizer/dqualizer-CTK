@@ -47,6 +47,7 @@ def check_process_exists(db_username, db_password, username, password, process_n
 
 
 def get_duration_until_process_started(db_username, db_password, username, password, process_name, monitoring_duration_sec, checking_interval_sec):
+    # We assume that the process is already terminated
     monitoring_start_time = datetime.now()
     # print("monitoring_start_time", monitoring_start_time)
 
