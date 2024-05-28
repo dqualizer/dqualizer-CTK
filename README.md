@@ -17,10 +17,10 @@ This project was created as part of my master's thesis, "Domain-Driven Resilienc
    ```sh
    git clone https://github.com/LeHenningo/Dqualizer-CTK
    
-2. Execute the `dqualizer_resilience_setup.sh` (If you also want to install the dqualizer project comment in lines 9-10)
+2. Execute the `dqualizer_resilience_setup.sh` (If you also want to install the dqualizer project, comment in lines 9-11)
 3. Follow the hints echoed by `dqualizer_resilience_setup.sh`
 
-If you want to use this API without dqualizer, you need to manually setup a MySQL database for authentication. 
+If you want to use this API without dqualizer, you must manually set up a MySQL database for authentication. 
 
 ## Start-Up
 
