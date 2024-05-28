@@ -4,7 +4,7 @@ python3 -m venv venv
 source venv/bin/activate
 echo "=== Installing Python dependencies in venv ==="
 pip install -r requirements.txt
-echo "=== Venv is now ready to run ctkExperimentExecutor and test-webserver. ==="
+echo "=== Venv is now ready to run resilience execution API and test-webserver. ==="
 echo "=== Now starting to clone dqualizer repository in parent directory ==="
 cd ..
 git clone https://github.com/dqualizer/dqualizer.git
