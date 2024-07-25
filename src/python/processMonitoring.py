@@ -24,7 +24,9 @@ def check_process_exists(db_username, db_password, username, password, process_n
                 return True
 
         # check jvm processes for matching process name
-        os.environ['PATH'] = "C:\\Users\\HenningMöllers\\.jdks\\openjdk-21.0.2\\bin"
+        # Retrieve the JAVA_HOME environment variable
+        java_home = os.environ.get('JAVA_HOME')
+        os.environ['PATH'] = java_home + "\\bin"
         jps_processes = subprocess.check_output(["jps"]).decode("utf-8").split("\n")
         for line in jps_processes:
             if process_name in line:

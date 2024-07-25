@@ -14,7 +14,9 @@ def start_jvm_process_by_path(db_username, db_password, username, password, path
     authenticated = mySqlConnector.authenticate_user(connection, username, password)
 
     if authenticated:
-        os.environ['PATH'] = "C:\\Users\\HenningMöllers\\.jdks\\openjdk-21.0.2\\bin"
+        # Retrieve the JAVA_HOME environment variable
+        java_home = os.environ.get('JAVA_HOME')
+        os.environ['PATH'] = java_home + "\\bin"
         started_process_pid = subprocess.Popen(["java", "-jar", path]).pid
         print(f"Started process has PID: {started_process_pid}")
 

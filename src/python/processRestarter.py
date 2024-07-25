@@ -17,7 +17,9 @@ while True:
     # Get PID, in case searched processes runs in JVM, as they just have the name 'java' in os
     # initialize with negative PID, as its definitely not found in system processes
     pid_for_searched_jvm_process = -1
-    os.environ['PATH'] = "C:\\Users\\HenningMöllers\\.jdks\\openjdk-21.0.2\\bin"
+    # Retrieve the JAVA_HOME environment variable
+    java_home = os.environ.get('JAVA_HOME')
+    os.environ['PATH'] = java_home + "\\bin"
     jps_processes = subprocess.check_output(["jps"]).decode("utf-8").split("\n")
 
     for line in jps_processes:
