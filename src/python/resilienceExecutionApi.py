@@ -94,8 +94,8 @@ def execute_experiment():
 
         # only considers one defined response measure at the moment, as it is not possible to define multiple at the
         # moment
-        extensions = chaos_experiment.get('extensions', None)
-        if extensions is not None:
+        extensions = chaos_experiment.get('extensions', [])
+        if extensions:
             response_measure_extension = chaos_experiment['extensions'][0]
             expected_recovery_time = response_measure_extension.get('expected_recovery_time_ms', None)
             if expected_recovery_time is not None:
