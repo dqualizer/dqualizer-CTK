@@ -39,11 +39,13 @@ def run_experiment(chaos_experiment, result_queue):
         result_json = json.dumps(result_dict)
         result_queue.put(result_json)
 
+    status = journal["status"]
+
     result_dict = {
         # TODO wrongly returns 'completed' if rollback fails!
         # throws also 500 status if the experiment terminated with status 'deviated'
-        "status_code": 200 if journal["status"] == "completed" else 500,
-        "status": f"Experiment was executed and terminated with status: {journal["status"]}.",
+        "status_code": 200 if status == "completed" else 500,
+        "status": f"Experiment was executed and terminated with status: {status}.",
         "info": "See Python logs, (experiment journal) and dashboards for result infos"
     }
     result_json = json.dumps(result_dict)
