@@ -71,7 +71,7 @@ def get_duration_until_process_started(db_username, db_password, username, passw
         print(f"The process '{process_name}' was not found within {monitoring_duration_sec} seconds.")
         influxDBConnector.write_monitoring_data("actual_response_measure", "",
                                                 "",
-                                                'actual_recovery_time', None)
+                                                'actual_recovery_time', -1)
         return None
 
 
